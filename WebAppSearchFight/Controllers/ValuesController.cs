@@ -1,4 +1,5 @@
-﻿using System;
+﻿using searchfight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,8 +23,12 @@ namespace WebAppSearchFight.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public Result [] Post([FromBody]string [] searchArguments)
         {
+            SearchEngineManager engines = new SearchEngineManager();
+            ResultsCalculator results = new ResultsCalculator(engines, searchArguments);
+            ResultsOutputter output = new ResultsOutputter(results);
+            return output.GetResults();
         }
 
         // PUT api/values/5
